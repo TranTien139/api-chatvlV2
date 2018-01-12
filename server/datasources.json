@@ -1,0 +1,17 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mongo_db": {
+    "host": "ds247077.mlab.com",
+    "port": 47077,
+    "url": "",
+    "database": "trantien",
+    "username": "trantien",
+    "password": "trantien#2018",
+    "name": "mongo_db",
+    "connector": "mongodb",
+    "allowExtendedOperators": true
+  }
+}
