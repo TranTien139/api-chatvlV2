@@ -12,7 +12,13 @@
   "properties": {
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "getUser":{
+      "type": "belongsTo",
+      "model": "Users",
+      "foreignKey": "userId"
+    }
+  },
   "acls": [],
   "methods": {}
 }
