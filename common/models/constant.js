@@ -9,6 +9,7 @@ exports.MESSAGE_GET_FAILED = 'Tải không thành công';
 exports.MESSAGE_GET_DUPLICATE = 'Dữ liệu đã tồn tại';
 exports.MESSAGE_GET_NOTFOUND = 'Dữ liệu không tồn tại';
 exports.MESSAGE_GET_MISSING_PARAM = 'Nhập thiếu dữ liệu';
+exports.MESSAGE_GET_DELETE = 'Xóa thành công';
 
 exports.HTTP_CODE_SUCCESS = 200;
 exports.HTTP_CODE_FAILED_DATA = 400;
