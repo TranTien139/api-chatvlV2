@@ -39,4 +39,46 @@ module.exports = function (Users) {
     }
   );
 
+
+  Users.login = function (username,password, cb) {
+
+    const userCredentials = {
+      "username": username,
+      "password": password
+    }
+    cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, {});
+    // Users.login(userCredentials, 'user', function (err, result) {
+    //
+    //   if (err) {
+    //     cb(null,cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, err);
+    //   }else {
+    //
+    //     let results = {
+    //       "token": result.id,
+    //       "ttl": result.ttl
+    //     };
+    //
+    //     cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, results);
+    //   }
+    //
+    // });
+
+  }
+
+  Users.remoteMethod(
+    'login',
+    {
+      http: {verb:'post'},
+      accepts: [
+        {arg: 'username', type:'string', required: true},
+        {arg: 'password', type:'string', required: true},
+      ],
+      returns: [
+        {arg: 'code', type:'number'},
+        {arg: 'message', type:'string'},
+        {arg: 'data', type:'object'}
+      ]
+    }
+  );
+
 }

@@ -14,26 +14,26 @@
     ]
   },
   "User": {
-    "dataSource": "db",
-    "public": false
+    "dataSource": "mongo_db",
+    "public": true
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "mongo_db",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "mongo_db",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "mongo_db",
     "public": false,
     "options": {
       "strictObjectIDCoercion": true
     }
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "mongo_db",
     "public": false
   },
   "Articles": {
@@ -42,7 +42,17 @@
   },
   "Users": {
     "dataSource": "mongo_db",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "register": true,
+          "login": true,
+          "logout": true
+        }
+      }
+    }
   },
   "Comments": {
     "dataSource": "mongo_db",

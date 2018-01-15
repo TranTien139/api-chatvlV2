@@ -149,7 +149,7 @@ module.exports = function (Comments) {
       http: {verb:'post'},
       accepts: [
         {arg: 'user_id', type:'string',required: true},
-        {arg: 'article_id', type:'string'},
+        {arg: 'article_id', type:'string', required: true},
         {arg: 'size', type:'number', default: 10},
         {arg: 'page', type:'number', default: 1}
       ],
