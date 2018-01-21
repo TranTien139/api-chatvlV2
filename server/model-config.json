@@ -15,7 +15,7 @@
   },
   "User": {
     "dataSource": "mongo_db",
-    "public": true
+    "public": false
   },
   "AccessToken": {
     "dataSource": "mongo_db",
@@ -40,7 +40,7 @@
     "dataSource": "mongo_db",
     "public": true
   },
-  "UserClient": {
+  "Users": {
     "dataSource": "mongo_db",
     "public": true
   },

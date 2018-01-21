@@ -12,7 +12,7 @@ module.exports = function (UserGeneral) {
       "email": email
     }
 
-    let UserModel = app.models.User;
+    let UserModel = app.models.Users;
 
     UserModel.findOne({
       where: {
@@ -45,7 +45,7 @@ module.exports = function (UserGeneral) {
 
   UserGeneral.getListUser = function (user_id, cb) {
 
-    let UserModel = app.models.User;
+    let UserModel = app.models.Users;
 
     UserModel.find({}).then((user)=> {
 

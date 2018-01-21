@@ -1,6 +1,6 @@
 {
   "name": "Articles",
-  "plural": "article",
+  "plural": "articles",
   "base": "Model",
   "mongodb": {
     "collection": "articles"
@@ -15,7 +15,7 @@
   "relations": {
     "getUser":{
       "type": "belongsTo",
-      "model": "User",
+      "model": "Users",
       "foreignKey": "userId"
     }
   },
@@ -32,6 +32,13 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "addPostArticle"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "deteteArticle"
     }
   ],
   "methods": {}

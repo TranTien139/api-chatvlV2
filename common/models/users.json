@@ -1,7 +1,7 @@
 {
-  "name": "UserClient",
+  "name": "Users",
   "plural": "users",
-  "base": "Model",
+  "base": "User",
   "mongodb": {
     "collection": "users"
   },
