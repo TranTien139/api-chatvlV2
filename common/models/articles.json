@@ -39,6 +39,20 @@
       "principalId": "$authenticated",
       "permission": "ALLOW",
       "property": "deteteArticle"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "getArticleNew"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$unauthenticated",
+      "permission": "ALLOW",
+      "property": "getArticleDetail"
     }
   ],
   "methods": {}
