@@ -101,4 +101,67 @@ module.exports = function(Articles) {
     }
   );
 
+  Articles.addPostArticle = function (user_id, title ,source, type, linkVideo, image, cb) {
+
+    user_id = user_id.toString();
+
+    let UserModel = app.models.User;
+
+    UserModel.findOne({
+      where: {
+        id: user_id
+      }
+    }).then(results =>{
+      if(results && results.userSlug) {
+
+        let data = {};
+        data["date"] = Math.floor(Date.now()/1000);
+        data["source"] = "Post By User";
+        data["source"] = source;
+        data["type"] = type;
+        data["title"] = title;
+        data["linkVideo"] = linkVideo;
+        data["linkCrawler"] = "Post By User";
+        data["status"] = "Publish";
+        data["image"] = image;
+        data["dislikes"] = [];
+        data["shares"] = [];
+        data["likes"] = [];
+        data["published_at"] = Math.floor(Date.now()/1000);
+        data["userId"] = results.userId;
+        data["userSlug"] = results.userSlug;
+
+        Articles.create(data).then(result=>{
+          cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, result);
+        });
+
+      } else {
+        cb(null, cst.HTTP_CODE_FAILED_DATA, "Không tồn tại user này", {});
+      }
+    }).catch(err=>{
+      cb(null,cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, err);
+    });
+
+  }
+
+  Articles.remoteMethod(
+    'addPostArticle',
+    {
+      http: {verb:'post'},
+      accepts: [
+        {arg: 'user_id', type:'string',required: true},
+        {arg: 'title', type:'string', required: true},
+        {arg: 'source', type:'string'},
+        {arg: 'type', type:'string', description:"title la video hoac article"},
+        {arg: 'linkVideo', type:'string'},
+        {arg: 'image', type:'string', required: true}
+      ],
+      returns: [
+        {arg: 'code', type:'number'},
+        {arg: 'message', type:'string'},
+        {arg: 'data', type:'object'}
+      ]
+    }
+  );
+
 };

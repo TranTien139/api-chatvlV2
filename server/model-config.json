@@ -40,19 +40,13 @@
     "dataSource": "mongo_db",
     "public": true
   },
-  "Users": {
+  "UserClient": {
     "dataSource": "mongo_db",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "register": true,
-          "login": true,
-          "logout": true
-        }
-      }
-    }
+    "public": true
+  },
+  "UserGeneral": {
+    "dataSource": "mongo_db",
+    "public": true
   },
   "Comments": {
     "dataSource": "mongo_db",

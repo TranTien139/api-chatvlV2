@@ -1,0 +1,74 @@
+'use strict';
+
+const app = require('../../server/server.js');
+const cst = require('./constant.js');
+
+module.exports = function (UserGeneral) {
+
+
+  UserGeneral.getUserInfo = function (email, cb) {
+
+    const userCredentials = {
+      "email": email
+    }
+
+    let UserModel = app.models.User;
+
+    UserModel.findOne({
+      where: {
+        email: userCredentials.email
+      }
+    }).then((user)=> {
+
+      cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, user);
+
+    }).catch(err=>{
+      cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, err);
+    });
+
+  }
+
+  UserGeneral.remoteMethod(
+    'getUserInfo',
+    {
+      http: {verb:'post'},
+      accepts: [
+        {arg: 'email', type:'string', required: true},
+      ],
+      returns: [
+        {arg: 'code', type:'number'},
+        {arg: 'message', type:'string'},
+        {arg: 'data', type:'object'}
+      ]
+    }
+  );
+
+  UserGeneral.getListUser = function (user_id, cb) {
+
+    let UserModel = app.models.User;
+
+    UserModel.find({}).then((user)=> {
+
+      cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, user);
+
+    }).catch(err=>{
+      cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, err);
+    });
+  }
+
+  UserGeneral.remoteMethod(
+    'getListUser',
+    {
+      http: {verb:'post'},
+      accepts: [
+        {arg: 'user_id', type:'string', required: true},
+      ],
+      returns: [
+        {arg: 'code', type:'number'},
+        {arg: 'message', type:'string'},
+        {arg: 'data', type:'object'}
+      ]
+    }
+  );
+
+}

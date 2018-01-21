@@ -1,6 +1,6 @@
 {
-  "name": "Users",
-  "plural": "user",
+  "name": "UserClient",
+  "plural": "users",
   "base": "Model",
   "mongodb": {
     "collection": "users"
@@ -13,6 +13,20 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [],
+  "acls": [
+    {
+      "accessType": "*",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "__post__getListUser"
+    }
+  ],
   "methods": {}
 }

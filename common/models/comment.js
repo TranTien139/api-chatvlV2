@@ -9,7 +9,7 @@ module.exports = function (Comments) {
 
   Comments.addComment = function (user_id, content ,article_id , cb) {
 
-    const user =  app.models.Users.findOne({where: {_id: user_id}});
+    const user =  app.models.UserClient.findOne({where: {_id: user_id}});
     const article =  app.models.Articles.findOne({where: {_id: article_id}});
 
 
@@ -46,7 +46,7 @@ module.exports = function (Comments) {
 
   Comments.addReplyComment = function (user_id, content ,comment_id , cb) {
 
-    const user =  app.models.Users.findOne({where: {_id: user_id}});
+    const user =  app.models.UserClient.findOne({where: {_id: user_id}});
     const comment =  Comments.findOne({where: {_id: comment_id}});
 
     Promise.all([user,comment]).spread((user,comment)=>{
