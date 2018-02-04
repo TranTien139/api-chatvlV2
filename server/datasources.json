@@ -4,12 +4,12 @@
     "connector": "memory"
   },
   "mongo_db": {
-    "host": "${MONGO_HOST}",
-    "port": "${MONGO_PORT}",
+    "host": "ds247077.mlab.com",
+    "port": 47077,
     "url": "",
-    "database": "${MONGO_DATABASE}",
-    "username": "${MONGO_USERNAME}",
-    "password": "${MONGO_PASSWORD}",
+    "database": "trantien",
+    "username": "trantien",
+    "password": "trantien#2018",
     "name": "mongo_db",
     "connector": "mongodb",
     "allowExtendedOperators": true
