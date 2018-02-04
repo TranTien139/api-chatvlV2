@@ -1,5 +1,5 @@
 {
-  "name": "Api-chatvlV2chatvlV2",
+  "name": "Api-chatvlV2",
   "version": "1.0.0",
   "main": "server/server.js",
   "engines": {
@@ -35,5 +35,5 @@
     "url": ""
   },
   "license": "UNLICENSED",
-  "description": "Api-chatvlV2chatvlV2"
+  "description": "Api-chatvlV2"
 }
