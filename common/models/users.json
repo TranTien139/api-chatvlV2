@@ -25,7 +25,7 @@
       "principalType": "ROLE",
       "principalId": "$everyone",
       "permission": "ALLOW",
-      "property": "__post__getListUser"
+      "property": "getTopUser"
     }
   ],
   "methods": {}
