@@ -5,7 +5,7 @@ const cst = require('./constant.js');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-const ultil = require('../ultils/getmongo.js');
+// const ultil = require('../ultils/getmongo.js');
 // const mongodb = require('mongodb');
 // const MongoClient = mongodb.MongoClient;
 
