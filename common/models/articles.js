@@ -5,7 +5,7 @@ const cst = require('./constant.js');
 const Promise = require('bluebird');
 const _ = require('lodash');
 
-// const ultil = require('../ultils/getmongo.js');
+const ultil = require('../ultils/getmongo.js');
 // const mongodb = require('mongodb');
 // const MongoClient = mongodb.MongoClient;
 
@@ -371,7 +371,7 @@ module.exports = function (Articles) {
         results = [];
       }
 
-      cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, {results, next_page:-1});
+      cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, {results, next_page: -1});
     }).catch(err => {
       console.log(err);
       cb(null, cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, err);
