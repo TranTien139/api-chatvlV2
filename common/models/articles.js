@@ -6,8 +6,8 @@ const Promise = require('bluebird');
 const _ = require('lodash');
 
 const ultil = require('../ultils/getmongo.js');
-// const mongodb = require('mongodb');
-// const MongoClient = mongodb.MongoClient;
+const mongodb = require('mongodb');
+const MongoClient = mongodb.MongoClient;
 
 module.exports = function (Articles) {
 
@@ -353,50 +353,60 @@ module.exports = function (Articles) {
 
   Articles.getRandomArticle = function (user_id, cb) {
 
-    Articles.find({
-      include: {
-        relation: "getUser",
-        scope: {
-          fields: ["image", "userSlug", "name"]
-        }
-      },
-      where: {
-        status: "Publish"
-      },
-      limit: 10,
-      order: "pulished_at DESC"
-    }).then(results => {
+    MongoClient.connect(ultil.getMongoURL(), function (error, db) {
+      if (error) {
+        cb(null, cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, error);
+      } else {
+        const collection = db.collection('articles');
 
-      if (!results) {
-        results = [];
+        collection.aggregate([
+          {
+            $match: {
+              status: "Publish",
+            }
+          },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'userId',
+              foreignField: '_id',
+              as: 'author'
+            }
+          },
+          {
+            $project : {
+              "id":1,
+              "type" : 1,
+              "linkVideo" : 1,
+              "linkCrawler" : 1,
+              "status" : 1,
+              "image" : 1,
+              "title" : 1,
+              "like_icon" : 1,
+              "published_at" : 1,
+              "total_comment" : 1,
+              "total_like" : 1,
+              "total_share" :1,
+              "userId" : 1,
+              "userSlug" : 1,
+              "total_view" : 1,
+              "author._id" : 1,
+              "author.image" : 1,
+              "author.name" : 1,
+              "author.userSlug" : 1
+            }
+          },
+          {$sample: {size: 10}},
+        ]).toArray(function (error, results) {
+          if (error) {
+            console.log(error);
+            cb(null, cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, error);
+          } else {
+            cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, results);
+          }
+        });
       }
-
-      cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, {results, next_page: -1});
-    }).catch(err => {
-      console.log(err);
-      cb(null, cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, err);
     });
-
-    // MongoClient.connect(ultil.getMongoURL(), function (error, db) {
-    //   if (error) {
-    //     cb(null, cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, error);
-    //   } else {
-    //
-    //     const collection = db.collection('articles');
-    //
-    //     collection.aggregate([
-    //       {
-    //         $match: {
-    //           status: "Publish",
-    //         }
-    //       },
-    //       {$sample: {size: 10}},
-    //     ]).then((results) => {
-    //       db.close();
-    //       cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, results);
-    //     });
-    //   }
-    // });
 
   }
 

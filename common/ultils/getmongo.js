@@ -10,5 +10,5 @@ function getMongoURL() {
     return url;
 }
 module.exports = {
-  getMongoURL,
+  getMongoURL
 }
