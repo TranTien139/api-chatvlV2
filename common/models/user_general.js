@@ -6,17 +6,17 @@ const cst = require('./constant.js');
 module.exports = function (UserGeneral) {
 
 
-  UserGeneral.getUserInfo = function (email, cb) {
+  UserGeneral.getUserInfo = function (id, cb) {
 
     const userCredentials = {
-      "email": email
+      "id": id
     }
 
     let UserModel = app.models.Users;
 
     UserModel.findOne({
       where: {
-        email: userCredentials.email
+        id: userCredentials.id
       }
     }).then((user)=> {
 
@@ -33,7 +33,7 @@ module.exports = function (UserGeneral) {
     {
       http: {verb:'post'},
       accepts: [
-        {arg: 'email', type:'string', required: true},
+        {arg: 'id', type:'string', required: true},
       ],
       returns: [
         {arg: 'code', type:'number'},

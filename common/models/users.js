@@ -7,7 +7,7 @@ module.exports = function (Users) {
 
   Users.getTopUser = function (user_id, type ,cb) {
 
-    if(type){
+    if(!type){
       type = 3;
     }
 
@@ -17,11 +17,11 @@ module.exports = function (Users) {
 
       results = results.map((obj)=>{
         if(type === 1) {
-          obj['total_score'] = Math.floor(Math.random() * Math.floor(100));
+          obj['total_score'] = Math.floor(Math.random() * 100);
         }else if(type ===2){
-          obj['total_score'] = Math.floor(Math.random() * Math.floor(10000));
+          obj['total_score'] = Math.floor(Math.random() * 10000) + 100;
         }else {
-          obj['total_score'] = Math.floor(Math.random() * Math.floor(1000000));
+          obj['total_score'] = Math.floor(Math.random() * 1000000) + 10000;
         }
         return obj;
       });
@@ -47,5 +47,4 @@ module.exports = function (Users) {
       ]
     }
   );
-
 }

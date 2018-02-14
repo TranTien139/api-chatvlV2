@@ -14,7 +14,7 @@ module.exports = function (Articles) {
 
   Articles.disableRemoteMethod('__get__getUser', false);
 
-  Articles.getArticleNew = function (user_id, slug_user, size, page, cb) {
+  Articles.getArticleNew = function (user_id, slug_user,type,size, page, cb) {
 
     size = parseInt(size, 10);
     page = parseInt(page, 10);
@@ -23,6 +23,15 @@ module.exports = function (Articles) {
     let where = {status: "Publish"};
     if (slug_user) {
       where.userSlug = slug_user;
+    }
+
+    if(type){
+      if(type===1){
+        where.type = "image";
+      }
+      if(type===2){
+        where.type = "video";
+      }
     }
 
     Articles.find({
@@ -35,7 +44,7 @@ module.exports = function (Articles) {
       where: where,
       skip: skip,
       limit: size,
-      order: "date DESC"
+      order: "published_at DESC"
     }).then(results => {
       if (!results) {
         results = [];
@@ -54,6 +63,7 @@ module.exports = function (Articles) {
       accepts: [
         {arg: 'user_id', type: 'string', required: true},
         {arg: 'slug_user', type: 'string'},
+        {arg: 'type', type: 'number', description:"1 la anh 2 la video"},
         {arg: 'size', type: 'number', default: 10},
         {arg: 'page', type: 'number', default: 1}
       ],
@@ -397,6 +407,7 @@ module.exports = function (Articles) {
             }
           },
           {$sample: {size: 10}},
+          {$sort:{"published_at":-1}}
         ]).toArray(function (error, results) {
           if (error) {
             console.log(error);
