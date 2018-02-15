@@ -17,7 +17,21 @@ module.exports = function (Comments) {
       if(user && article && content){
         let data = {created_by: user.id, content:content,article_id:article.id,type: 1, created_at: Date.now(), like:0, count_reply:0}
         Comments.create(data).then(val=>{
-          cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, val);
+          Comments.findOne({
+            include:{
+              relation: "getUser",
+              scope:{
+                fields: ["image","userSlug","name"]
+              }
+            },
+            where: {
+              id: val.id
+            }
+          }).then(results=>{
+            cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS,results);
+          }).catch(err=>{
+            cb(null,cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, err);
+          });
         });
       } else {
         cb(null, cst.HTTP_CODE_MISSING_PARAM, cst.MESSAGE_GET_MISSING_PARAM, {});
@@ -55,7 +69,21 @@ module.exports = function (Comments) {
         Comments.create(data).then(val=>{
           let count_reply = comment.count_reply + 1;
           Comments.updateAll({where: {_id: comment_id}},{count_reply: count_reply}).then(result=>{
-            cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, result);
+            Comments.findOne({
+              include:{
+                relation: "getUser",
+                scope:{
+                  fields: ["image","userSlug","name"]
+                }
+              },
+              where: {
+                id: result.id
+              }
+            }).then(results=>{
+              cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS,results);
+            }).catch(err=>{
+              cb(null,cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, err);
+            });
           });
         });
       } else {
