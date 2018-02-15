@@ -247,6 +247,10 @@ module.exports = function (Articles) {
       if (article && user) {
         let obj_like = {user_id: user_id, type: type};
 
+        if(typeof article.likes === 'undefined'){
+          article.likes = [];
+        }
+
         let likes = article.likes.filter(obj => {
           return obj.user_id !== user_id
         });
@@ -270,6 +274,7 @@ module.exports = function (Articles) {
       }
 
     }).catch(err => {
+      console.log(err);
       cb(null, cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, err);
     });
   }
