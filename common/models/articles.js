@@ -250,7 +250,7 @@ module.exports = function (Articles) {
         let likes = article.likes.filter(obj => {
           return obj.user_id !== user_id
         });
-        if (type !== 0) {
+        if (type !== 'unlike') {
           likes.unshift(obj_like);
         }
         let total_like = likes.length;
@@ -281,7 +281,7 @@ module.exports = function (Articles) {
       accepts: [
         {arg: 'user_id', type: 'string', required: true},
         {arg: 'article_id', type: 'string', required: true},
-        {arg: 'type', type: 'number', required: true, description: "nhap cac icon tu 1 den 6"},
+        {arg: 'type', type: 'string', required: true, description: "nhap cac icon unlike,like, love, haha, wow, sad, angry"},
       ],
       returns: [
         {arg: 'code', type: 'number'},
