@@ -12,7 +12,6 @@ module.exports = function (Comments) {
     const user =  app.models.Users.findOne({where: {_id: user_id}});
     const article =  app.models.Articles.findOne({where: {_id: article_id}});
 
-
     Promise.all([user,article]).spread((user,article)=>{
       if(user && article && content){
         let data = {created_by: user.id, content:content,article_id:article.id,type: 1, created_at: Date.now(), like:0, count_reply:0}
@@ -68,7 +67,7 @@ module.exports = function (Comments) {
         let data = {created_by: user.id, content:content,comment_id:comment.id, type: 2, created_at: Date.now(), like:0}
         Comments.create(data).then(val=>{
           let count_reply = comment.count_reply + 1;
-          Comments.updateAll({where: {_id: comment_id}},{count_reply: count_reply}).then(result=>{
+          Comments.updateAll({_id: comment_id},{count_reply: count_reply}).then(result=>{
             Comments.findOne({
               include:{
                 relation: "getUser",
@@ -77,7 +76,7 @@ module.exports = function (Comments) {
                 }
               },
               where: {
-                id: result.id
+                id: val.id
               }
             }).then(results=>{
               cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS,results);
