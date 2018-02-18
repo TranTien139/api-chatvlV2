@@ -442,4 +442,109 @@ module.exports = function (Articles) {
     }
   );
 
+  Articles.searchArticle = function(text, cb) {
+
+    MongoClient.connect(ultil.getMongoURL(), function(error, db) {
+      if (error) {
+        cb(null, cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, error);
+      } else {
+        const collection = db.collection('articles');
+
+        collection.aggregate([
+          {
+            $match: {
+              status: "Publish",
+              $text: {
+                $search: text
+              }
+            }
+          },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'userId',
+              foreignField: '_id',
+              as: 'author'
+            }
+          },
+          {
+            $project : {
+              "id":1,
+              "type" : 1,
+              "linkVideo" : 1,
+              "linkCrawler" : 1,
+              "status" : 1,
+              "image" : 1,
+              "title" : 1,
+              "like_icon" : 1,
+              "published_at" : 1,
+              "total_comment" : 1,
+              "total_like" : 1,
+              "total_share" :1,
+              "userId" : 1,
+              "userSlug" : 1,
+              "total_view" : 1,
+              "author._id" : 1,
+              "author.image" : 1,
+              "author.name" : 1,
+              "author.userSlug" : 1
+            }
+          },
+          {$limit: 10},
+          {$sort:{"published_at":-1}}
+        ]).toArray(function (error, results) {
+          if (error) {
+            console.log(error);
+            cb(null, cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, error);
+          } else {
+            cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, results);
+          }
+        });
+      }
+    });
+
+  }
+
+  Articles.remoteMethod(
+    'searchArticle',
+    {
+      http: {verb: 'post'},
+      accepts: [
+        {arg: 'text', type: 'string', required: true}
+      ],
+      returns: [
+        {arg: 'code', type: 'number'},
+        {arg: 'message', type: 'string'},
+        {arg: 'data', type: 'object'}
+      ]
+    }
+  );
+
+  Articles.initSearchArticle = function(cb) {
+
+    MongoClient.connect(ultil.getMongoURL(), function(error, db) {
+      if (error) {
+        cb(null, cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, error);
+      } else {
+        const collection = db.collection('articles');
+        collection.createIndex({ title: "text" });
+        cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, {});
+      }
+    });
+
+  }
+
+  Articles.remoteMethod(
+    'initSearchArticle',
+    {
+      http: {verb: 'post'},
+      accepts: [],
+      returns: [
+        {arg: 'code', type: 'number'},
+        {arg: 'message', type: 'string'},
+        {arg: 'data', type: 'object'}
+      ]
+    }
+  );
+
 };
