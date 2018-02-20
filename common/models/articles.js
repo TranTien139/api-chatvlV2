@@ -143,14 +143,14 @@ module.exports = function (Articles) {
         if (linkVideo) {
           type = "video";
         } else {
-          type = "article";
+          type = "image";
         }
         data["date"] = Math.floor(Date.now() / 1000);
         data["source"] = "Post By User";
         data["type"] = type;
         data["title"] = title;
-        data["description"] = description;
-        data["linkVideo"] = linkVideo;
+        data["description"] = description || '';
+        data["linkVideo"] = linkVideo || '';
         data["linkCrawler"] = "Post By User";
         data["status"] = "Publish";
         data["image"] = image;
