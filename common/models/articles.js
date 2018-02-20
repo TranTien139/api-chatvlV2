@@ -136,7 +136,7 @@ module.exports = function (Articles) {
         id: user_id
       }
     }).then(results => {
-      if (results && results.userSlug && results.userId) {
+      if (results && results.userSlug) {
 
         let data = {};
         let type;
@@ -162,7 +162,7 @@ module.exports = function (Articles) {
         data["likes"] = [];
 
         data["published_at"] = Math.floor(Date.now() / 1000);
-        data["userId"] = results.userId;
+        data["userId"] = results.id;
         data["userSlug"] = results.userSlug;
 
         Articles.create(data).then(result => {
