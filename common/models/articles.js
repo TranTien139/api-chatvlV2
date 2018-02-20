@@ -159,6 +159,7 @@ module.exports = function (Articles) {
         data["like_icon"] = [];
         data["total_share"] = 0;
         data["total_comment"] = 0;
+        data["likes"] = [];
 
         data["published_at"] = Math.floor(Date.now() / 1000);
         data["userId"] = results.userId;
