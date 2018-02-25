@@ -1,0 +1,18 @@
+{
+  "name": "LeaderPost",
+  "plural": "leaderposts",
+  "base": "Model",
+  "mongodb": {
+    "collection": "leaderposts"
+  },
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

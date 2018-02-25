@@ -14,7 +14,8 @@ module.exports = function (Comments) {
 
     Promise.all([user,article]).spread((user,article)=>{
       if(user && article && content){
-        let data = {created_by: user.id, content:content,article_id:article.id,type: 1, created_at: Date.now(), like:0, count_reply:0}
+          let total_comment = article.total_comment || 0;
+          let data = {created_by: user.id, content:content,article_id:article.id,type: 1, created_at: Date.now(), like:0, count_reply:0}
         Comments.create(data).then(val=>{
           Comments.findOne({
             include:{
@@ -27,7 +28,9 @@ module.exports = function (Comments) {
               id: val.id
             }
           }).then(results=>{
-            cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS,results);
+            app.models.Articles.updateAll({_id: article_id},{total_comment: total_comment+1}).then(result=>{
+              cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, results);
+            });
           }).catch(err=>{
             cb(null,cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, err);
           });
@@ -124,7 +127,6 @@ module.exports = function (Comments) {
     }).catch(err=>{
       cb(null, cst.HTTP_CODE_FAILED_DATA, cst.MESSAGE_GET_FAILED, err);
     });
-
   }
 
   Comments.remoteMethod(
