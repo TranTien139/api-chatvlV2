@@ -33,7 +33,44 @@ module.exports = function (UserGeneral) {
     {
       http: {verb:'post'},
       accepts: [
-        {arg: 'id', type:'string', required: true},
+        {arg: 'id', type:'string', required: true}
+      ],
+      returns: [
+        {arg: 'code', type:'number'},
+        {arg: 'message', type:'string'},
+        {arg: 'data', type:'object'}
+      ]
+    }
+  );
+
+  UserGeneral.getUserInfoEmail = function (email, cb) {
+
+    const userCredentials = {
+      "email": email
+    }
+
+    let UserModel = app.models.Users;
+
+    UserModel.findOne({
+      where: {
+        email: userCredentials.email
+      }
+    }).then((user)=> {
+
+      cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, user);
+
+    }).catch(err=>{
+      cb(null, cst.HTTP_CODE_SUCCESS, cst.MESSAGE_GET_SUCCESS, err);
+    });
+
+  }
+
+  UserGeneral.remoteMethod(
+    'getUserInfoEmail',
+    {
+      http: {verb:'post'},
+      accepts: [
+        {arg: 'email', type:'string', required: true}
       ],
       returns: [
         {arg: 'code', type:'number'},
