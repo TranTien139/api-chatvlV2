@@ -3,9 +3,12 @@
 const app = require('../../server/server.js');
 const cst = require('./constant.js');
 const _ = require('lodash');
-const Promise = require('bluebird');
+const Promise = require('bluebird')
+var disableAllMethods = require('./../ultils/disable_method.js').disableAllMethods;
 
 module.exports = function (Comments) {
+
+  disableAllMethods(Comments, '');
 
   Comments.addComment = function (user_id, content ,article_id , cb) {
 

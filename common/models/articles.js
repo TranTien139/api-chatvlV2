@@ -9,10 +9,12 @@ const ultil = require('../ultils/getmongo.js');
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
+var disableAllMethods = require('./../ultils/disable_method.js').disableAllMethods;
+
 module.exports = function (Articles) {
 
+  disableAllMethods(Articles,'');
 
-  Articles.disableRemoteMethod('__get__getUser', false);
 
   Articles.getArticleNew = function (user_id, slug_user,type,size, page, cb) {
 
